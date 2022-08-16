@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb");
 const db = require("../shared/mongo");
 
 // admin signUpSchema
+// admin signUpSchema
 const signUpSchema = joi.object({
   email: joi.string().email().required(),
   password: joi.string().min(3).max(20).required(),
