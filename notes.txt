@@ -1,0 +1,30 @@
+notes
+mongodb+srv://gobikrishna:3tTYFqg5pUC10vGf@cluster1.ipoinyq.mongodb.net/?retryWrites=true&w=majority
+//3tTYFqg5pUC10vGf --this mongo db password
+
+
+1- create .env and 
+{   
+    port, 
+    mongodb url,
+    mongo DB name (its hole folder),
+    IS_MAINTENANCE = false,
+    jwt secret key
+    stripe secret key
+} 
+2- middleware
+{
+    auth headers
+    logging url,date,method
+    IS_MAINTENANCE
+}
+3-helper this is fist step (querys)
+{
+    validation for post method to store DB
+
+    find, findOne:_id, insertOne(post), findOneUpdateOne, deleteOne
+}
+4- helper to service 
+{
+    
+}
