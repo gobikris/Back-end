@@ -1,7 +1,7 @@
 const helper = require("../helper/products.helper");
 const cloudinary = require("./cloudinary.service");
 
-
+// service
 const service = {
   async getAllProducts(req, res) {
 

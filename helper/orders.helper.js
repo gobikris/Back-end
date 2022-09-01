@@ -5,7 +5,7 @@ const joi = require("joi");
 const ordersSchema = joi.object({
   token: joi.object().required(),
   product: joi.array().required(),
-  total: joi.number().required(),
+  total: joi.number().required(), 
   status: joi.string().required(),
 })
 

@@ -62,7 +62,7 @@ const service = {
   async updateOrders(req, res) {
     try {
       // data validation
-      const newOrder = await helper.validateOrderUpdate(req.body);
+      const newOrder = await helper.validateOrderUpdate(req.body); 
       // Order validation
       const oldOrder = await helper.findById(req.params.id);
       if (!oldOrder) return res.status(400).send({ error: "order id invalid" });
