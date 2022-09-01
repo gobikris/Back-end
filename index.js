@@ -25,19 +25,22 @@ const app = express();
 
         // routes
         app.get('/', (req,res)=> res.send('hello world'));
-    
+        
         app.use("/auth", routes.authRoute);
-        app.use('/products', routes.productsRoute);
-        app.use("/users", routes.usersRoute);
-        app.use('/checkout', stripeRoute);
-        app.use('/orders', routes.ordersRoute);
         app.use("/admin",routes.adminRoute);
+        app.use('/products', routes.productsRoute);
         app.use(middleware.auth_Service);
+        app.use("/users", routes.usersRoute);
+        app.use('/orders', routes.ordersRoute);
+        app.use('/checkout', stripeRoute);
+        
+        
+        
         console.log('routes initiating');
 
         // port
-        app.listen(process.env.PORT, ()=> console.log(`server listening at a ${process.env.PORT}`))
+        app.listen(process.env.PORT, ()=> console.log(`Server Is Online ${process.env.PORT}`))
     } catch (error) {
-        console.log('error starting application', error.message);
+        console.log('Something went wrong', error.message);
     }
 })();

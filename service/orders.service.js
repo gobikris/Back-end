@@ -11,17 +11,21 @@ const service = {
       res.status(500).send({ error: "can't find orders" });
     }
   },
+
   async getAllOrdersById(req, res){
+    console.log(req.user);
     try {
-      console.log(req.params.userId);
-      const data = await helper.findByUserId(req.params.userId);
+
+      const data = await helper.findByUserId(req.user._id);
+      console.log(req.user._id);
       res.send(data);
 
     } catch (error) {
       console.log("error", error.message);
-      res.status(500).send({ error: `can't find this id ${req.params.id}`});
+      res.status(500).send({ error: `can't find this id ${req.user._id}`});
     }
   },
+
   async getOrdersById(req, res) {
     try {
       const data = await helper.findById(req.params.id);
@@ -34,51 +38,55 @@ const service = {
 
     }
   },
-  async   createOrders(req, res) {
+
+  async createOrders(req, res) {
     try {
       // data validation
-      const post = await helper.validate(req.body);
+      const order = await helper.validate(req.body);
       
-      const user = await authHelper.findById(post.userId);
-      if(!user) return res.status(400).send({ error: "user Invalid"})
+      // const user = await authHelper.findById(order.userId);
+      // if(!user) return res.status(400).send({ error: "user Invalid"})
 
-      const {insertedId: _id} = await helper.create({...post, 
+      const {insertedId: _id} = await helper.create({...order,
+        userId: req.user._id, 
         date: new Date().toLocaleDateString(),
         time: new Date().toLocaleTimeString(),
       });
-      res.send({ _id, ...post });
+      res.send({ _id, ...order });
     } catch (error) {
       console.log("error:", error.message);
-      res.status(500).send({ error: "incorrect data try again" });
+      res.status(500).send({ error: "Incorrect orders details" });
     }
   },
+
   async updateOrders(req, res) {
     try {
       // data validation
-      const newPost = await helper.validate(req.body);
-      // post validation
-      const oldPost = await helper.findById(req.params.id);
-      if (!oldPost) return res.status(400).send({ error: "order id invalid" });
-      // // user validation
-      const user = await authHelper.findById(newPost.userId);
-      if(!user) return res.status(400).send({ error: "user invalid"})
-      // update data
-      const { value } = await helper.update({ _id: oldPost._id, ...newPost });
+      const newOrder = await helper.validateOrderUpdate(req.body);
+      // Order validation
+      const oldOrder = await helper.findById(req.params.id);
+      if (!oldOrder) return res.status(400).send({ error: "order id invalid" });
+      // order id validation
+      const user = await authHelper.findById(newOrder.userId);
+      if(!user) return res.status(400).send({ error: "Order Id invalid"})
+      // update orders
+      const { value } = await helper.update({ _id: oldOrder._id, ...newOrder });
       res.send(value);
     } catch (error) {
       console.log("error:", error.message);
       res.status(500).send({ error: error.message });
     }
   },
+
   async deleteOrdersById(req, res) {
     try {
-      // check productId
-      const post = await helper.findById(req.params.id);
-      if (!post)
-        return res.status(400).send({ error: "product id invalid" });
+      // check ordersId
+      const order = await helper.findById(req.params.id);
+      if (!order)
+        return res.status(400).send({ error: "order id is invalid" });
       // delete data
-      await helper.deleteById(post._id);
-      res.end();
+      await helper.deleteById(order._id);
+      res.end("Deleted");
     } catch (error) {
       res.status(500).send({ error: error.message });
     }

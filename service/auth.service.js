@@ -25,6 +25,7 @@ const authService = {
         ...user,
         date: new Date(),
       });
+      
       res.send({ message: "Sign Up Successfully", userId: insertedId });
     } catch (error) {
       res.status(500).send({ error: error.message });
@@ -62,20 +63,25 @@ const authService = {
 
   async forgetPassword(req, res) {
     try {
+
       // email validation
       const user = await helper.validateEmail(req.body);
+
       // user existing validation
       const { email } = await helper.findByEmail(user.email);
       if (!email) return res.status(400).send({ error: "user already exist" });
+
       // check userId
       const { _id } = await helper.findByEmail(user.email);
       const id = ObjectId(_id).valueOf();
+
       // Token generation
       const authToken = await jwt.sign(
         { email: user.email },
         process.env.JWT_SECRET,
         { expiresIn: "3h" }
       );
+
       // Nodemailer
       const sender = nodemailer.createTransport({
         service: "gmail",
@@ -84,12 +90,14 @@ const authService = {
           pass: process.env.PASS,
         },
       });
+
       const composeEmail = {
         from: process.env.USER,
         to: email,
         subject: "Password Verification",
         text: `${process.env.BASE_URL}/${id}/${authToken}`,
       };
+
       sender.sendMail(composeEmail, function (error, info) {
         if (error) {
           console.log(error);
@@ -100,12 +108,13 @@ const authService = {
         }
         return res.sendStatus(200);
       });
+
     } catch (error) {
       res.status(500).send({ error: error.message });
     }
   },
 
-  // user resetPassword service
+  // resetPassword 
   async resetPassword(req, res) {
     try {
       const { password } = await helper.validatePassword(req.body);
@@ -123,7 +132,6 @@ const authService = {
         updatedHashPassword,
       });
 
-      // send response
       res.send(updatePassword);
     } catch (error) {
       res.status(500).send({ error: error.message });

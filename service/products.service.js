@@ -1,4 +1,5 @@
 const helper = require("../helper/products.helper");
+const cloudinary = require("./cloudinary.service");
 
 
 const service = {
@@ -25,9 +26,28 @@ const service = {
     try {
       // data validation
       const data = await helper.validate(req.body);
+      // img
+      if(data.img){
+        data.img = await cloudinary.uploader.upload(data.img,{
+          upload_preset:"product"
+        })
+      }
+      // img1
+      if(data.img1){
+        data.img1 = await cloudinary.uploader.upload(data.img1,{
+          upload_preset:"product"
+        })
+      }
+      // img2
+      if(data.img2){
+        data.img2 = await cloudinary.uploader.upload(data.img2,{
+          upload_preset:"product"
+        })
+      }
       // insert data
       const insertData = await helper.create(data);
       res.send(insertData);
+
     } catch (error) {
       console.log("error:", error.message);
       res.status(500).send({ error: "incorrect data try again" });
@@ -37,6 +57,25 @@ const service = {
     try {
       // data validation
       const newPost = await helper.validate(req.body);
+      // img
+      if (newPost.img){
+        newPost.img = await cloudinary.uploader.upload(newPost.img, {
+        upload_preset: "product"
+      })
+    }
+    // img1
+    if (newPost.img1){
+      newPost.img1 = await cloudinary.uploader.upload(newPost.img1, {
+      upload_preset: "product"
+    })
+  }
+  // img2
+  if (newPost.img2){
+    newPost.img2 = await cloudinary.uploader.upload(newPost.img2, {
+    upload_preset: "product"
+  })
+}
+
       // post validation
       const oldPost = await helper.findById(req.params.id);
       if (!oldPost) return res.status(400).send({ error: "id invalid" });

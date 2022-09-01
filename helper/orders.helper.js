@@ -3,13 +3,20 @@ const ObjectId = require("mongodb").ObjectId;
 const joi = require("joi");
 
 const ordersSchema = joi.object({
-  userId: joi.string().required(),
   token: joi.object().required(),
   product: joi.array().required(),
   total: joi.number().required(),
   status: joi.string().required(),
 })
 
+// UpdateOrder
+const UpdateOrder = joi.object({
+  userId: joi.string().required(),
+  token: joi.object().required(),
+  product: joi.array().required(),
+  total: joi.number().required(),
+  status: joi.string().required(),
+});
 
 const helper = {
   validate(post) {
@@ -17,6 +24,13 @@ const helper = {
       return ordersSchema.validateAsync(post);
     } catch ({ details: [{ message }] }) {
       throw new Error(message);
+    }
+  },
+  validateOrderUpdate(post){
+    try {
+        return UpdateOrder.validateAsync(post);
+    } catch ({ details: [{ message }] }) {
+    throw new Error(message);
     }
   },
   find() {

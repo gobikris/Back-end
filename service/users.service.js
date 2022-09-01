@@ -1,5 +1,4 @@
 const helper = require("../helper/users.helper");
-
 const authHelper = require("../helper/auth.helper");
 
 const service = {
@@ -14,7 +13,7 @@ const service = {
     },
     async getUsersById(req,res){
         try {
-            const data = await helper.findById(req.params.id);
+            const data = await helper.findById(req.user._id);
             res.send(data);
         } catch (error) {
             console.log("error:", error.message);
@@ -23,12 +22,11 @@ const service = {
     },
     async updateUsers(req,res){
         try {
-
             // validate the users 
             const newUser = await authHelper.validateSignUp(req.body);
 
             // Existing Users Validation
-            const oldUser = await authHelper.findById(req.params.id);
+            const oldUser = await authHelper.findById(req.user._id);
             if(!oldUser)
             return res.status(401).send({error:"Invalid User"});
 

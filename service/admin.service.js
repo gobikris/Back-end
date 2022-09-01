@@ -1,9 +1,9 @@
-// import files
+
 const helper = require("../helper/admin.helper");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// admin auth service
+// admin
 const service = {
   // user register service
   async register(req, res) {

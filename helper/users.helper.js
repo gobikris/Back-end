@@ -1,11 +1,7 @@
-// joi
 const joi  = require('joi');
-
-//  mongodb 
 const ObjectId = require("mongodb").ObjectId;
-
-// connect to the db collection
 const db = require("../shared/mongo");
+
 
 // helper functions
 const helper = {

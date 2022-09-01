@@ -7,8 +7,8 @@ async auth_Service(req,res,next){
   try {
     if(req.headers && req.headers.authorization){
       const [_,token] = req.headers.authorization.split(" ");
-      const user = await jwt.verify(token,process.env.JWT_SECRET);
-      console.log(user);
+      req.user = await jwt.verify(token,process.env.JWT_SECRET);
+      console.log(req.user);
       next();
     }else{
       res.status(403).send({error:"No authorization"});
@@ -26,7 +26,7 @@ async auth_Service(req,res,next){
   maintenance(req, res, next) {
     process.env.IS_MAINTENANCE == "true"
       ? res.send({
-          Message: "Site is Under Maintenance Plz Try After Sometime",
+          Message: "Site Is Under Maintenance Plz Try After Sometime",
         })
       : next();
   },
