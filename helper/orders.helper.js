@@ -1,7 +1,7 @@
 const db = require("../shared/mongo");
 const ObjectId = require("mongodb").ObjectId;
 const joi = require("joi");
-
+// create schema
 const ordersSchema = joi.object({
   token: joi.object().required(),
   product: joi.array().required(),

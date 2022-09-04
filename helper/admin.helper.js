@@ -1,16 +1,16 @@
-// import files
+
 const joi = require("joi");
 const { ObjectId } = require("mongodb");
 const db = require("../shared/mongo");
 
-// admin signUpSchema
-// admin signUpSchema
+
+//  signUpSchema
 const signUpSchema = joi.object({
   email: joi.string().email().required(),
   password: joi.string().min(3).max(20).required(),
 });
 
-// admin loginSchema
+//  loginSchema
 const loginSchema = joi.object({
   email: joi.string().email().required(),
   password: joi.string().min(3).max(20).required(),

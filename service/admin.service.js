@@ -13,7 +13,7 @@ const service = {
       // user exist
       const userExist = await helper.findByEmailId(user.email);
       if (userExist)
-        return res.status(400).send({ error: "user already exist" });
+        return res.status(400).send({ error: "Admin already exist" });
       // generate Password
       user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
       // insert data
@@ -45,7 +45,7 @@ const service = {
         process.env.JWT_SECRET,
         { expiresIn: "8h" }
       );
-      res.send({ message: "user login successfully", adminauthToken });
+      res.send({ message: "Admin login successfully", adminauthToken });
     } catch (error) {
       res.status(500).send({ error: error.message });
     }
