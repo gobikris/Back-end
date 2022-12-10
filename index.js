@@ -18,7 +18,7 @@ const app = express();
         // middleware
         
         app.use(cors());
-        app.use(express.json({limit:"50mb"}));
+        app.use(express.json({limit:"50mb"})); 
         app.use(middleware.logging);
         app.use(middleware.maintenance);
         console.log('middleware initiating ');
@@ -39,7 +39,7 @@ const app = express();
         console.log('routes initiating');
 
         // port
-        app.listen(process.env.PORT, ()=> console.log(`Server Is Online ${process.env.PORT}`))
+        app.listen(PORT, ()=> console.log(`Server Is Online ${PORT}`))
     } catch (error) {
         console.log('Something went wrong', error.message);
     }
