@@ -15,7 +15,7 @@ const app = express();
         // mongo DB connection
         await mongo.connect();
 
-        // middleware
+        // middleware 
         
         app.use(cors());
         app.use(express.json({limit:"50mb"})); 
