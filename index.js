@@ -19,7 +19,7 @@ const app = express();
 
         
         app.use(cors({
-            origin:"https://master.d2jydgk3z8ckdr.amplifyapp.com/"
+            // origin:"https://master.d2jydgk3z8ckdr.amplifyapp.com/"
         }
             ));
         app.use(express.json({limit:"50mb"})); 
