@@ -17,10 +17,7 @@ const app = express();
 
         // middleware 
         
-        app.use(cors({
-            origin:"https://master.d2jydgk3z8ckdr.amplifyapp.com/"
-        }
-            ));
+        app.use(cors());
         app.use(express.json({limit:"50mb"})); 
         app.use(middleware.logging);
         app.use(middleware.maintenance);
