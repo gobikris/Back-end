@@ -16,7 +16,9 @@ const app = express();
         await mongo.connect();
 
         // middleware 
+
         
+          
         app.use(cors());
         app.use(express.json({limit:"50mb"})); 
         app.use(middleware.logging);
@@ -25,7 +27,6 @@ const app = express();
 
         // routes
         app.get('/', (req,res)=> res.send('hello world'));
-        
         app.use("/auth", routes.authRoute);
         app.use("/admin",routes.adminRoute);
         app.use('/products', routes.productsRoute);
